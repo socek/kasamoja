@@ -2,6 +2,9 @@
 from setuptools import setup, find_packages
 
 install_requires = [
+    'pyramid',
+    'sqlalchemy',
+    'sqlalchemy-migrate',
 ]
 
 if __name__ == '__main__':
