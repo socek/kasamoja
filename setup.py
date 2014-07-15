@@ -5,6 +5,7 @@ install_requires = [
     'pyramid',
     'sqlalchemy',
     'sqlalchemy-migrate',
+    'pastedeploy',
 ]
 
 if __name__ == '__main__':
