@@ -7,6 +7,8 @@ install_requires = [
     'sqlalchemy-migrate',
     'pastedeploy',
     'waitress',
+    'smallsettings',
+    'pyramid_debugtoolbar',
 ]
 
 if __name__ == '__main__':
@@ -16,4 +18,7 @@ if __name__ == '__main__':
           package_dir={'': 'src'},
           install_requires=install_requires,
           include_package_data=True,
+          entry_points=(
+              '[paste.app_factory]\n'
+              'main = kasamoja.application.init:main\n'),
           )

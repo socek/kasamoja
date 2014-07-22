@@ -58,4 +58,4 @@ class Serve(Task):
         self.add_link('bael.project.virtualenv:Develop')
 
     def make(self):
-        self.command(['pserve %(data:frontend.ini)s' % (self.paths)])
+        self.command(['pserve %(data:frontend.ini)s --reload' % (self.paths)])
