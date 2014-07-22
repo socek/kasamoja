@@ -3,7 +3,7 @@ from os import mkdir, path
 from baelfire.task import Task
 from baelfire.template import TemplateTask
 from baelfire.dependencies import (
-    # AlwaysRebuild,
+    AlwaysRebuild,
     FileDoesNotExists,
 )
 
@@ -14,7 +14,6 @@ class CreateDataDir(Task):
 
     directorie_names = [
         'data',
-        'data:log',
     ]
 
     @property
@@ -32,7 +31,7 @@ class CreateDataDir(Task):
                 mkdir(directory)
 
 
-class DevelopmentInit(TemplateTask):
+class FrontendIni(TemplateTask):
     name = 'Creating frontend.ini file'
     path = '/kasamoja/frontend.ini'
 
@@ -46,3 +45,17 @@ class DevelopmentInit(TemplateTask):
     def get_template_path(self):
         return self.paths['templates:frontend.ini']
 
+
+class Serve(Task):
+    name = 'Run development server'
+    path = '/kasamoja/serve'
+
+    def generate_dependencies(self):
+        self.add_dependecy(AlwaysRebuild())
+
+    def generate_links(self):
+        self.add_link(FrontendIni)
+        self.add_link('bael.project.virtualenv:Develop')
+
+    def make(self):
+        self.command(['pserve %(data:frontend.ini)s' % (self.paths)])

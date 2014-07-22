@@ -6,6 +6,7 @@ install_requires = [
     'sqlalchemy',
     'sqlalchemy-migrate',
     'pastedeploy',
+    'waitress',
 ]
 
 if __name__ == '__main__':

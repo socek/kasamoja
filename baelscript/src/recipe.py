@@ -5,36 +5,31 @@ from bael.project.recipe import ProjectRecipe
 
 from .tasks import (
     CreateDataDir,
-    DevelopmentInit,
+    FrontendIni,
+    Serve,
 )
 
 
 class BaelScriptRecipe(Recipe):
 
-    def _add_path(self, name, dirname, basename):
-        if dirname is None:
-            self.paths[name] = basename
-        else:
-            self.paths[name] = ['%%(%s)s' % (dirname,), basename]
-
     def create_settings(self):
-        self._add_path(
+        self.set_path(
             'project:main',
             None,
             dirname(dirname(dirname(__file__))))
-        self._add_path('project:src', 'project:main', 'src')
-        self._add_path('baelscript', 'project:main', 'baelscript')
-        self._add_path('baelscript:src', 'baelscript', 'src')
-        self._add_path(
+        self.set_path('project:src', 'project:main', 'src')
+        self.set_path('baelscript', 'project:main', 'baelscript')
+        self.set_path('baelscript:src', 'baelscript', 'src')
+        self.set_path(
             'templates:frontend.ini',
             None,
             'frontend.ini')
-        self._add_path('data', 'project:main', 'data')
-        self._add_path('data:frontend.ini', 'data', 'frontend.ini')
-        self._add_path('data:log', 'data', 'all.log')
-        self._add_path('uwsgi:socket', None, '/tmp/uwsgi.socket')
-        self._add_path('uwsgi:socket', None, '/tmp/uwsgi.socket')
-        self._add_path(
+        self.set_path('data', 'project:main', 'data')
+        self.set_path('data:frontend.ini', 'data', 'frontend.ini')
+        self.set_path('data:log', 'data', 'all.log')
+        self.set_path('uwsgi:socket', None, '/tmp/uwsgi.socket')
+        self.set_path('uwsgi:socket', None, '/tmp/uwsgi.socket')
+        self.set_path(
             'venv:site-packages',
             'virtualenv_path',
             'lib/python3.4/site-packages/')
@@ -43,11 +38,12 @@ class BaelScriptRecipe(Recipe):
         self.settings['develop'] = True
 
     def final_settings(self):
-        self._add_path('virtualenv_path', 'project:main', 'venv')
+        self.set_path('virtualenv_path', 'project:main', 'venv')
 
     def gather_recipes(self):
         self.add_recipe(ProjectRecipe())
 
     def gather_tasks(self):
         self.add_task(CreateDataDir)
-        self.add_task(DevelopmentInit)
+        self.add_task(FrontendIni)
+        self.add_task(Serve)
