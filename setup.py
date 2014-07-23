@@ -9,6 +9,7 @@ install_requires = [
     'waitress',
     'smallsettings',
     'pyramid_debugtoolbar',
+    'pyramid_jinja2',
 ]
 
 if __name__ == '__main__':

@@ -1,12 +1,10 @@
-from pyramid.response import Response
-from pyramid.view import view_config as ctrl
+from kasamoja.application.controller import Controller
 
 
-@ctrl(route_name='homepage')
-class Homepage(object):
+class HomepageController(Controller):
+    renderer = 'homepage.jinja2'
 
-    def __init__(self, request):
-        self.request = request
-
-    def __call__(self):
-        return Response("This is homepage!")
+    def make(self):
+        return {
+            'szef': 10,
+        }

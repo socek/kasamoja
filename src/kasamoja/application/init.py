@@ -12,12 +12,11 @@ class Application(object):
         self.settings = self.generate_settings(settings)
         # self.initialize_logging()
         self.create_config()
-        self.config.scan('kasamoja')
         # self.connect_database()
         # self.mail_access()
-        # self.config.include('pyramid_jinja2')
+        self.config.include('pyramid_jinja2')
         self.config.registry['settings'] = self.settings
-        # self.config.registry['jinja2'] = self.config.get_jinja2_environment()
+        self.config.registry['jinja2'] = self.config.get_jinja2_environment()
 
         # self.config.add_request_method(self.get_user, 'user', reify=True)
         # self.config.add_request_method(self.unique_num, 'unique_num',
