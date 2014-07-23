@@ -1,9 +1,11 @@
 from os import mkdir, path
+from glob import glob
 
 from bael.project.virtualenv import VirtualenvTask
 from baelfire.dependencies import (
     AlwaysRebuild,
     FileDoesNotExists,
+    FileChanged,
 )
 from baelfire.error import CommandError
 from baelfire.task import Task
@@ -15,7 +17,7 @@ class CreateDataDir(Task):
 
     directorie_names = [
         'data',
-        'flags',
+        'kmflags',
     ]
 
     @property
@@ -43,6 +45,7 @@ class Serve(Task):
     def generate_links(self):
         self.add_link('baelscript.src.frontendtask:FrontendIni')
         self.add_link('bael.project.virtualenv:Develop')
+        self.add_link(Migration)
 
     def make(self):
         self.command(['pserve %(data:frontend.ini)s --reload' % (self.paths)])
@@ -75,6 +78,11 @@ class MigrationVersioning(Migration):
 
 class Migration(Migration):
     path = '/kasamoja/migration'
+
+    def generate_dependencies(self):
+        super().generate_dependencies()
+        for file_ in glob(path.join(self.paths['migration:versions'], '*.py')):
+            self.add_dependecy(FileChanged(file_))
 
     def get_output_file(self):
         return self.paths['flags:dbmigration']

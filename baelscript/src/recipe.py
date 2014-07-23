@@ -43,6 +43,7 @@ class BaelScriptRecipe(Recipe):
 
         self.set_path('migration:main', 'project:main', 'migrations')
         self.set_path('migration:manage', 'migration:main', 'manage.py')
+        self.set_path('migration:versions', 'migration:main', 'versions')
 
         self.settings['project:name'] = 'KasaMoja'
         self.settings['develop'] = True
