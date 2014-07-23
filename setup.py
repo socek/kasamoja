@@ -11,6 +11,7 @@ install_requires = [
     'pyramid_debugtoolbar',
     'pyramid_jinja2',
     'psycopg2',
+    'pyramid_beaker',
 ]
 
 if __name__ == '__main__':

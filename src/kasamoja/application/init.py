@@ -1,3 +1,5 @@
+import logging
+
 from pyramid.config import Configurator
 from smallsettings import Factory
 from sqlalchemy import create_engine

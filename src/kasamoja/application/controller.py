@@ -15,6 +15,7 @@ class Controller(object):
             'matchdict': self.request.matchdict,
             'settings': self.request.registry['settings'],
             'db': self.request.registry['db'],
+            'session': self.request.session,
         }
 
     def __call__(self):
