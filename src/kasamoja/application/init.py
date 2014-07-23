@@ -1,5 +1,7 @@
 from pyramid.config import Configurator
 from smallsettings import Factory
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 from .routes import make_routes
 
@@ -10,18 +12,12 @@ class Application(object):
 
     def __call__(self, settings={}):
         self.settings = self.generate_settings(settings)
-        # self.initialize_logging()
+        self.initialize_logging()
         self.create_config()
-        # self.connect_database()
-        # self.mail_access()
+        self.connect_database()
         self.config.include('pyramid_jinja2')
         self.config.registry['settings'] = self.settings
         self.config.registry['jinja2'] = self.config.get_jinja2_environment()
-
-        # self.config.add_request_method(self.get_user, 'user', reify=True)
-        # self.config.add_request_method(self.unique_num, 'unique_num',
-        #                                property=True)
-        # self.config.add_request_method(self.add_s3, 's3', reify=True)
 
         return self.config.make_wsgi_app()
 
@@ -40,21 +36,24 @@ class Application(object):
             ])
         return settings, paths
 
-    def create_config(self):
-        # authentication_policy = self.create_authentication_policy()
-        # authorization_policy = ACLAuthorizationPolicy()
+    def initialize_logging(self):
+        logging.config.fileConfig(
+            self.settings['logging:config'],
+            disable_existing_loggers=False)
 
+    def create_config(self):
         self.config = Configurator(
             settings=self.settings,
-            # authentication_policy=authentication_policy,
-            # authorization_policy=authorization_policy,
             # root_factory=EntryFactory,
             # session_factory=self.create_session(),
         )
         self.make_pyramid_includes()
         make_routes(self)
-        # subscriber(self.config)
-        # self.config.add_renderer('json', json_renderer)
+
+    def connect_database(self):
+        engine = create_engine(self.settings['db:url'])
+        self.config.registry['db'] = sessionmaker(bind=engine)()
+        self.config.registry['db_engine'] = engine
 
     def make_pyramid_includes(self):
         for include in self.settings['includes']:

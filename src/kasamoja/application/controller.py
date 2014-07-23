@@ -14,6 +14,7 @@ class Controller(object):
             'GET': self.request.GET,
             'matchdict': self.request.matchdict,
             'settings': self.request.registry['settings'],
+            'db': self.request.registry['db'],
         }
 
     def __call__(self):

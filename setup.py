@@ -10,6 +10,7 @@ install_requires = [
     'smallsettings',
     'pyramid_debugtoolbar',
     'pyramid_jinja2',
+    'psycopg2',
 ]
 
 if __name__ == '__main__':
