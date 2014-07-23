@@ -46,8 +46,6 @@ class Application(object):
     def create_config(self):
         self.config = Configurator(
             settings=self.settings,
-            # root_factory=EntryFactory,
-            # session_factory=self.create_session(),
         )
         self.make_pyramid_includes()
         make_routes(self)
