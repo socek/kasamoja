@@ -20,7 +20,7 @@ def make_settings(settings, paths):
     settings['db:password'] = 'develop'
     settings['db:host'] = 'localhost'
     settings['db:port'] = '5432'
-    settings['db:db'] = 'develop'
+    settings['db:db'] = 'kasamoja_develop'
 
     paths['data'] = 'data'
     paths['frontend'] = ['%(data)s', 'frontend.ini']

@@ -12,6 +12,7 @@ install_requires = [
     'pyramid_jinja2',
     'psycopg2',
     'pyramid_beaker',
+    'sqlalchemy-migrate',
 ]
 
 if __name__ == '__main__':

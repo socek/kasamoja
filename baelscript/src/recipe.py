@@ -5,9 +5,12 @@ from bael.project.recipe import ProjectRecipe
 
 from .tasks import (
     CreateDataDir,
-    FrontendIni,
     Serve,
+    MigrationVersioning,
+    Migration,
 )
+
+from .frontendtask import FrontendIni
 
 
 class BaelScriptRecipe(Recipe):
@@ -34,6 +37,13 @@ class BaelScriptRecipe(Recipe):
             'virtualenv_path',
             'lib/python3.4/site-packages/')
 
+        self.set_path('kmflags', 'data', 'flags')
+        self.set_path('flags:dbversioning', 'kmflags', 'versioning.flag')
+        self.set_path('flags:dbmigration', 'kmflags', 'dbmigration.flag')
+
+        self.set_path('migration:main', 'project:main', 'migrations')
+        self.set_path('migration:manage', 'migration:main', 'manage.py')
+
         self.settings['project:name'] = 'KasaMoja'
         self.settings['develop'] = True
 
@@ -47,3 +57,5 @@ class BaelScriptRecipe(Recipe):
         self.add_task(CreateDataDir)
         self.add_task(FrontendIni)
         self.add_task(Serve)
+        self.add_task(MigrationVersioning)
+        self.add_task(Migration)
