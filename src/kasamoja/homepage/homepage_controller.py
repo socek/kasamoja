@@ -1,4 +1,4 @@
-from kasamoja.application.controller import Controller
+from kasamoja.application.controller import DatabaseController as Controller
 
 
 class HomepageController(Controller):

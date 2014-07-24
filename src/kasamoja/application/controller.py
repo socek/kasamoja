@@ -14,13 +14,38 @@ class Controller(object):
             'GET': self.request.GET,
             'matchdict': self.request.matchdict,
             'settings': self.request.registry['settings'],
-            'db': self.request.registry['db'],
             'session': self.request.session,
         }
 
     def __call__(self):
+        self.data = {}
+        self.before_filter()
         data = self.make() or {}
-        return data
+        self.data.update(data)
+        self.after_filter()
+        return self.data
 
     def make(self):
         pass
+
+    def before_filter(self):
+        for method in self.before():
+            method()
+
+    def after_filter(self):
+        for method in self.after():
+            method()
+
+    def before(self):
+        return []
+
+    def after(self):
+        return []
+
+
+class DatabaseController(Controller):
+
+    def _request_args(self):
+        data = super()._request_args()
+        data['db'] = self.request.registry['db']
+        return data
