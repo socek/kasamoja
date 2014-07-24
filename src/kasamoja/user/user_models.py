@@ -1,4 +1,4 @@
-from kasamoja.application.db import Base
+from hatak.db import Base
 
 from sqlalchemy import Column, Integer, String
 

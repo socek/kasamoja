@@ -1,7 +1,7 @@
-from kasamoja.application.controller import DatabaseController as Controller
+from hatak.controller import DatabaseController
 
 
-class HomepageController(Controller):
+class HomepageController(DatabaseController):
     renderer = 'homepage.jinja2'
 
     def make(self):
