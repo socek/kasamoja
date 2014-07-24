@@ -37,9 +37,8 @@ class BaelScriptRecipe(Recipe):
             'virtualenv_path',
             'lib/python3.4/site-packages/')
 
-        self.set_path('kmflags', 'data', 'flags')
-        self.set_path('flags:dbversioning', 'kmflags', 'versioning.flag')
-        self.set_path('flags:dbmigration', 'kmflags', 'dbmigration.flag')
+        self.set_path('flags:dbversioning', 'flags', 'versioning.flag')
+        self.set_path('flags:dbmigration', 'flags', 'dbmigration.flag')
 
         self.set_path('migration:main', 'project:main', 'migrations')
         self.set_path('migration:manage', 'migration:main', 'manage.py')
@@ -50,9 +49,10 @@ class BaelScriptRecipe(Recipe):
 
     def final_settings(self):
         self.set_path('virtualenv_path', 'project:main', 'venv')
+        self.set_path('flags', 'data', 'flags')
 
     def gather_recipes(self):
-        self.add_recipe(ProjectRecipe())
+        self.add_recipe(ProjectRecipe(False))
 
     def gather_tasks(self):
         self.add_task(CreateDataDir)

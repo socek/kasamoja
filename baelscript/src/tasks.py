@@ -17,7 +17,6 @@ class CreateDataDir(Task):
 
     directorie_names = [
         'data',
-        'kmflags',
     ]
 
     @property
