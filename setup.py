@@ -13,6 +13,7 @@ install_requires = [
     'psycopg2',
     'pyramid_beaker',
     'sqlalchemy-migrate',
+    'hatak==0.1',
 ]
 
 if __name__ == '__main__':
